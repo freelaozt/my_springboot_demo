@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>首页</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <!--http://localhost:8080/resumes/home/file-->
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+</head>
+<body>
+<!--<div class="no-page-group">-->
+<div class="page-group">
+    <div class="page page-current" id='router'>
+        <!-- 标题栏 -->
+        <header class="bar bar-nav">
+            <a class="icon icon-code pull-left open-panel"></a>
+            <h1 class="title">我的电脑</h1>
+            <a id="edit-add" class="icon icon-edit pull-right" href="#"></a>
+        </header>
+
+        <!-- 这里是页面内容区 -->
+        <div class="content pull-to-refresh-content native-scroll transitioning" data-ptr-distance="55" style="">
+            <!-- 默认的下拉刷新层 -->
+            <div class="pull-to-refresh-layer">
+                <div class="preloader"></div>
+                <div class="pull-to-refresh-arrow"></div>
+            </div>
+
+            <!-- 下面是正文 -->
+            <div class="card-container">
+                <div class="card-wrap">
+                    <div class="list-block media-list">
+                        <ul id="card-list">
+                            <li>
+                                <a href="#" class="item-link item-content">
+                                    <div class="item-media">
+                                        <img height="50" title=""
+                                             src="/resumes/"
+                                             onerror="this.src=placeholder.getData({text: 'Image 404'})">
+                                    </div>
+                                    <div class="item-inner">
+                                        <div class="item-title-row">
+                                            <div class="item-title">标题</div>
+                                            <div class="item-after">$15</div>
+                                        </div>
+                                        <div class="item-subtitle">标题</div>
+                                        <div class="item-text">此处是文本内容...</div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="content-block">
+                <!--more-->
+            </div>
+
+        </div>
+    </div>
+
+    <div class="page router" id='router-0'>
+        <header class="bar bar-nav">
+            <a class="button button-link button-nav pull-left back" href="#router">
+                <span class="icon icon-left"></span>
+                返回
+            </a>
+            <h1 class='title'>路由</h1>
+        </header>
+        <div class="content">
+            <div class="card-container">
+                <div class="list-block media-list">
+                    <ul id="card-lists">
+                        <li>
+                            <a href="#" class="item-link item-content">
+                                <div class="item-media">
+                                    <img height="50" title=""
+                                         src="/resumes/"
+                                         onerror="this.src=placeholder.getData({text: 'Image 404'})">
+                                </div>
+                                <div class="item-inner">
+                                    <div class="item-title-row">
+                                        <div class="item-title">标题</div>
+                                        <div class="item-after">$15</div>
+                                    </div>
+                                    <div class="item-subtitle">标题</div>
+                                    <div class="item-text">此处是文本内容...</div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                这是内联编写的页面，点击左上角的 <a href="#" class='back'>返回</a> 按钮返回上一页。
+            </div>
+        </div>
+    </div>
+
+    <!-- popup, panel 等放在这里 -->
+    <div class="panel-overlay"></div>
+    <!-- Left Panel with Reveal effect -->
+    <div class="panel panel-left panel-reveal">
+        <div class="content-block">
+            <div id="panel-wrap">
+                <p id="panel-title">扫描二维码，在手机查看</p>
+                <p><a href="" class="login-panel">登录</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+<script src="https://cdn.bootcss.com/placeholder.js/3.1.0/placeholder.js"></script>
+<script>
+    var user_result;
+
+    $(function () {
+        $.getJSON("//" + window.location.host + '/resumes/file/listRoot', function (data) {
+            if (data.listRoot) {
+
+                var listRootData = data.listRoot;
+                callback(listRootData);
+
+            } else {
+                //console.log('failed' + data.error);
+            }
+        });
+
+
+    });
+
+    function callback(listRootData) {
+        user_result = listRootData;
+        handleData(listRootData);
+        //console.log(user_result);
+        // listRootData.map(function (item, index) {
+        //console.log(item)
+        // });
+
+    }
+
+    function handleData(listRootData) {
+        var html = '';
+
+        listRootData.map(function (item, index) {
+            html += `<li>
+                         <a href="#router-${item.id}" class="item-link item-content" >
+                             <div class="item-media">
+                                  <img height="50" title=""
+                                       src="/resumes/"
+                                       onerror="this.src=placeholder.getData({text: 'Image 404'})"/>
+                              </div>
+                              <div class="item-inner">
+                                   <div class="item-title-row">
+                                        <div class="item-title">${item.path}</div>
+                                        <div class="item-after">${item.id}</div>
+                                   </div>
+                                   <div class="item-text">${item.path}</div>
+                              </div>
+                         </a>
+                    </li>`;
+            //console.log(item)
+        });
+        $('#card-list').html(html);
+
+    }
+
+    // $(document).on("pageInit", function(e, pageId, $page) {
+    //     console.log("start")
+    //
+    //     console.log("end "+pageId)
+    //     $('.router').attr('id',pageId);
+    //      if(pageId == pageId) {
+    //     $('.router').attr('id',pageId);
+    //          console.log("end "+pageId)
+    //      }
+    // });
+
+    //拦截事件
+    $(document).on("pageInit", "#router-0", function (e, pageId, $page) {
+    //     console.log(pageId);
+    //     console.log(user_result);
+
+        //由于是一个新的技术，你可以通过下面的代码检测你的浏览器是否支持
+        // if (window.localStorage) {
+        //     //存储变量的值
+        //     localStorage.url = ;
+        // } else {
+        //     alert("NOT SUPPORT");
+        // }
+        handleRouterPageData()
+    });
+
+    function handleRouterPageData() {
+        var url = "http://localhost:8080/resumes/file/listFiles?path=E:/";
+        $.getJSON(url, function (data) {
+            console.log(data.listFiles);
+
+            if (data.listFiles) {
+
+                var listFilesData = data.listFiles;
+                console.log(listFilesData);
+
+                callbackRouter(listFilesData);
+
+            } else {
+                //console.log(data);
+                //console.log('failed' + data.error);
+            }
+        });
+    }
+
+    function callbackRouter(data) {
+
+        var html = '';
+
+        data.map(function (item, index) {
+            html += `<li>
+                         <a href="#router-${item.id}" class="item-link item-content" >
+                             <div class="item-media">
+                                  <img height="50" title=""
+                                       src="/resumes/"
+                                       onerror="this.src=placeholder.getData({text: 'Image 404'})"/>
+                              </div>
+                              <div class="item-inner">
+                                   <div class="item-title-row">
+                                        <div class="item-title">${item.path}</div>
+                                        <div class="item-after">${item.id}</div>
+                                   </div>
+                                   <div class="item-text">${item.path}</div>
+                              </div>
+                         </a>
+                    </li>`;
+            //console.log(item)
+        });
+        $('#card-lists').html(html);
+
+    }
+
+</script>
+</body>
+</html>

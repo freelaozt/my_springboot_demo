@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "resumes.relevant.path",
+      "type": "java.lang.String",
+      "description": "Description for resumes.relevant.path."
+  }
+] }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fxd.dao.ResumesLabelDao">
+    <select id="queryResumesLabelList" resultType="com.fxd.entity.ResumesLabel">
+        SELECT * FROM tb_resumes_label
+         WHERE resumes_card_id = #{resumesCardId}
+         ORDER BY priority DESC
+    </select>
+    <select id="queryResumesLabelCount" resultType="int">
+        SELECT COUNT(*) FROM tb_resumes_label
+         WHERE resumes_card_id = #{resumesCardId}
+         ORDER BY priority DESC
+    </select>
+    <select id="queryResumesLabel" resultType="com.fxd.entity.ResumesLabel">
+        SELECT * FROM tb_resumes_label
+         WHERE resumes_card_id = #{resumesCardId}
+         ORDER BY priority DESC
+    </select>
+    <insert id="batchInsertResumesLabel" parameterType="java.util.List">
+        INSERT INTO
+        tb_resumes_label (resumes_label_name,priority,create_time,last_edit_time,resumes_card_id)
+        VALUES
+        <foreach collection="list" item="resumesLabel" index="index" separator=",">
+            (#{resumesLabel.resumesLabelName},#{resumesLabel.priority},#{resumesLabel.createTime}, #{resumesLabel.lastEditTime},#{resumesLabel.resumesCard.resumesCardId})
+        </foreach>
+    </insert>
+</mapper>
